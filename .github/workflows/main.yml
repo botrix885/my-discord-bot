@@ -1,6 +1,6 @@
 name: Discord Bot
 
-on:push
+on:
   workflow_dispatch:
   push:
     branches:
@@ -22,7 +22,7 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
 
-      - name: run bot
+      - name: Run bot
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: python bot.py
