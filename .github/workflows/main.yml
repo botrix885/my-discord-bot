@@ -1,4 +1,4 @@
-name: Discord Bot
+name: bot kick
 
 on:
   workflow_dispatch:
