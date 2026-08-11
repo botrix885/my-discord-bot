@@ -37,7 +37,7 @@ async def timeout(ctx, member: discord.Member, duration="10m"):
     match = re.fullmatch(r"(\d+)([smhd])", duration.lower())
 
     if not match:
-        await ctx.send("❌ استخدم مدة مثل: `10m` أو `1h` أو `1d`")
+        await ctx.send("❌ استخدم مدة مثل: 10m أو 1h أو 1d")
         return
 
     amount = int(match.group(1))
@@ -62,7 +62,7 @@ async def timeout(ctx, member: discord.Member, duration="10m"):
     )
 
     await ctx.send(
-        f"🔇 {member.mention} أخذ تايم أوت لمدة `{duration}`."
+        f"🔇 {member.mention} أخذ تايم أوت لمدة {duration}."
     )
 
 
