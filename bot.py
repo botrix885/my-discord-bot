@@ -1,4 +1,5 @@
 import discord
+import os
 from discord.ext import commands
 from datetime import timedelta
 
@@ -34,4 +35,5 @@ async def سد_فمك(ctx, member: discord.Member):
 async def إنذار(ctx, member: discord.Member):
     await ctx.send(f"⚠️ إنذار لـ {member.mention}")
 
-bot.run("TOKEN")
+bot.run(os.getenv("TOKEN"))
+
