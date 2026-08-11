@@ -1,39 +1,28 @@
-import discord
-import os
-from discord.ext import commands
-from datetime import timedelta
+name: Discord Bot
 
-intents = discord.Intents.default()
-intents.message_content = True
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
 
-@bot.event
-async def on_ready():
-    print(f"تم تشغيل البوت: {bot.user}")
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
 
-@bot.command()
-@commands.has_permissions(ban_members=True)
-async def انقلع(ctx, member: discord.Member):
-    await member.ban()
-    await ctx.send(f"تم حظر {member.mention}")
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-@bot.command()
-@commands.has_permissions(kick_members=True)
-async def برا(ctx, member: discord.Member):
-    await member.kick()
-    await ctx.send(f"تم طرد {member.mention}")
+      - name: Install requirements
+        run: pip install -r requirements.txt
 
-@bot.command()
-@commands.has_permissions(moderate_members=True)
-async def سد_فمك(ctx, member: discord.Member):
-    await member.timeout(timedelta(minutes=10))
-    await ctx.send(f"تم إعطاء تايم أوت لـ {member.mention}")
-
-@bot.command()
-@commands.has_permissions(moderate_members=True)
-async def إنذار(ctx, member: discord.Member):
-    await ctx.send(f"⚠️ إنذار لـ {member.mention}")
-
-bot.run(os.getenv("TOKEN"))
-
+      - name: Run bot
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: python bot.py
